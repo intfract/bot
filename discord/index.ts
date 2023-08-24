@@ -1,6 +1,7 @@
 import { Client, GatewayIntentBits, Partials, Collection, ActivityType } from 'discord.js'
 import { listen } from './events'
 import { config } from 'dotenv'
+import { registerSlashCommands } from './commands'
 
 config()
 
@@ -17,5 +18,6 @@ const client = new Client({
 })
 
 listen(client)
+registerSlashCommands()
 
 client.login(process.env.token)
