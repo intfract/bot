@@ -1,5 +1,8 @@
 import { REST, Routes, SlashCommandBuilder, ApplicationCommandOptionType, ApplicationCommandType } from 'discord.js'
 import fs from 'fs'
+import { config } from 'dotenv'
+
+config()
 
 const rest = new REST().setToken(process.env.token ?? 'TOKEN')
 
@@ -17,7 +20,7 @@ function getSlashCommands() {
   const files = fs.readdirSync(`./dist/commands`).filter(file => file.endsWith('.js')) // absolute path
 
   for (const file of files) {
-    const command: Command = require(`./commands/${file}`) // relative path
+    const command: Command = require(`./commands/${file}`).default // relative path
     const slashCommand = new SlashCommandBuilder()
     slashCommand
       .setName(command.name)

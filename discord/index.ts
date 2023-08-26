@@ -21,3 +21,5 @@ listen(client)
 registerSlashCommands()
 
 client.login(process.env.token)
+
+export default client
