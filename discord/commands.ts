@@ -10,6 +10,7 @@ type Command = {
   name: string,
   description: string,
   type: ApplicationCommandType,
+  category: string,
   options?: ApplicationCommandOptionType[],
 }
 
