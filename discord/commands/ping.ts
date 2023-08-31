@@ -1,7 +1,7 @@
 import { ApplicationCommandType, Client, CommandInteraction, EmbedBuilder } from 'discord.js'
 
 export default {
-  name: 'ping',
+  name: __filename,
   description: 'Check the bot\'s ping',
   type: ApplicationCommandType.ChatInput,
   category: 'general',
