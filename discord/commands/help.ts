@@ -2,7 +2,7 @@ import { ApplicationCommandOptionBase, ApplicationCommandType, Client, CommandIn
 import { commands } from '../commands'
 
 export default {
-  name: __filename,
+  name: 'help',
   description: 'Help is on its way!',
   type: ApplicationCommandType.ChatInput,
   category: 'general',
