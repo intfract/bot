@@ -1,9 +1,7 @@
 import { Client, GatewayIntentBits, Partials, Collection, ActivityType } from 'discord.js'
 import { listen } from './events'
-import { config } from 'dotenv'
 import { registerSlashCommands } from './commands'
-
-config()
+import { TOKEN, CLIENT_ID } from './config'
 
 const client = new Client({
   intents: [
@@ -20,6 +18,6 @@ const client = new Client({
 listen(client)
 registerSlashCommands()
 
-client.login(process.env.token)
+client.login(TOKEN)
 
 export default client

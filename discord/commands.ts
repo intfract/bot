@@ -1,10 +1,8 @@
 import { REST, Routes, SlashCommandBuilder, ApplicationCommandOptionType, ApplicationCommandType } from 'discord.js'
 import fs from 'fs'
-import { config } from 'dotenv'
+import { TOKEN, CLIENT_ID } from './config'
 
-config()
-
-const rest = new REST().setToken(process.env.token ?? 'TOKEN')
+const rest = new REST().setToken(TOKEN ?? '')
 
 type Command = {
   name: string,
@@ -34,7 +32,7 @@ function getSlashCommands() {
 
 export async function registerSlashCommands() {
   try {
-    await rest.put(Routes.applicationCommands(process.env.client ?? 'CLIENT_ID'), { body: getSlashCommands() })
+    await rest.put(Routes.applicationCommands(CLIENT_ID ?? ''), { body: getSlashCommands() })
     console.log('registered slash commands')
   } catch (error) {
     console.log(error)
