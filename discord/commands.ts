@@ -15,16 +15,12 @@ type Command = {
 export let commands: Record<string, any> = {}
 
 function getSlashCommands() {
-  const slashCommands: SlashCommandBuilder[] = []
+  const slashCommands: Command[] = []
   const files = fs.readdirSync(`./dist/commands`).filter(file => file.endsWith('.js')) // absolute path
 
   for (const file of files) {
     const command: Command = require(`./commands/${file}`).default // relative path
-    const slashCommand = new SlashCommandBuilder()
-    slashCommand
-      .setName(command.name)
-      .setDescription(command.description)
-    slashCommands.push(slashCommand)
+    slashCommands.push(command)
     commands[command.name] = command
   }
   return slashCommands
