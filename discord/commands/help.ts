@@ -1,5 +1,9 @@
-import { ApplicationCommandOptionBase, ApplicationCommandType, Client, CommandInteraction, EmbedBuilder } from 'discord.js'
+import { ApplicationCommandOptionBase, ApplicationCommandOptionType, ApplicationCommandType, Client, CommandInteraction, EmbedBuilder } from 'discord.js'
 import { commands } from '../commands'
+
+const keys = Object.keys(ApplicationCommandOptionType)
+const types = keys.slice(keys.length / 2)
+console.log(types)
 
 export default {
   name: 'help',
@@ -14,7 +18,7 @@ export default {
 
     for (const [key, value] of Object.entries(commands)) {
       embed.addFields({
-        name: 'options' in value ? [value.name, ...value.options.map((x: ApplicationCommandOptionBase) => x.name)].join(' ') : key,
+        name: 'options' in value ? [value.name, ...value.options.map((x: ApplicationCommandOptionBase) => `\`${types[x.type - 1]} ${x.name}\``)].join(' ') : key,
         value: value.description,
       })
     }

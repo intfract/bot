@@ -70,7 +70,6 @@ export default {
     function append(x) {
       const i = interaction.options.get(x.toLowerCase())
       let v
-      console.log(i)
       if (i) {
         if (x === 'Image') {
           v = i.value
