@@ -14,7 +14,7 @@ export default {
     const embed = new EmbedBuilder()
       .setTitle('Help')
       .setDescription('Here is a list of commands!')
-      .setColor('#4865f2')
+      .setColor('#5865f2')
 
     for (const [key, value] of Object.entries(commands)) {
       embed.addFields({

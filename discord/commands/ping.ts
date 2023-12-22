@@ -9,7 +9,7 @@ export default {
     const embed = new EmbedBuilder()
       .setTitle('Ping')
       .setDescription('🏓 Pong!')
-      .setColor('#4865f2')
+      .setColor('#5865f2')
       .setFields({
         name: 'Latency',
         value: `**${Math.round(client.ws.ping)} ms**`
