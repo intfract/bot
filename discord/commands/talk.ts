@@ -1,10 +1,12 @@
-import { ApplicationCommandOptionType, ApplicationCommandType, Client, ColorResolvable, CommandInteraction, EmbedBuilder } from 'discord.js'
+import { ApplicationCommandOptionType, ApplicationCommandType, Client, ColorResolvable, CommandInteraction, EmbedBuilder, InteractionResponse } from 'discord.js'
 import { API_KEY } from '../config'
+import { createErrorEmbed } from '../defaults'
 import {
   GoogleGenerativeAI,
   HarmCategory,
   HarmBlockThreshold,
   Part,
+  GenerateContentResult,
 } from '@google/generative-ai'
 
 const MODEL_NAME = 'gemini-pro'
@@ -53,13 +55,14 @@ export default {
       contents: [{ role: "user", parts }],
       generationConfig,
       safetySettings,
-    })
+    }).catch(e => interaction.reply({ embeds: [createErrorEmbed(e)] }))
 
+    if (!('response' in result)) return
     const { response } = result
 
     const embed = new EmbedBuilder()
       .setTitle('Gemini Pro')
-      .setDescription(response.text()) // to be replaced with gemini pro response
+      .setDescription(response.text())
       .setColor('#5865f2')
 
     interaction.reply({ embeds: [embed] })
