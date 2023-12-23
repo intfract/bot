@@ -18,7 +18,7 @@ export default {
 
     for (const [key, value] of Object.entries(commands)) {
       embed.addFields({
-        name: 'options' in value ? [value.name, ...value.options.map((x: ApplicationCommandOptionBase) => `\`${types[x.type - 1]} ${x.name}\``)].join(' ') : key,
+        name: value.options ? [value.name, ...value.options.map((x: any) => (x instanceof ApplicationCommandOptionBase ? `\`${types[x.type - 1]} ${x.name}\`` : ''))].join(' ') : key,
         value: value.description,
       })
     }

@@ -50,6 +50,8 @@ export default {
 
     const parts: Part[] = []
     parts.push({ text })
+    
+    await interaction.deferReply()
 
     const result = await model.generateContent({
       contents: [{ role: "user", parts }],
@@ -64,7 +66,7 @@ export default {
       .setTitle('Gemini Pro')
       .setDescription(response.text())
       .setColor('#5865f2')
-
-    interaction.reply({ embeds: [embed] })
+    
+    interaction.editReply({ embeds: [embed] })
   }
 }

@@ -1,6 +1,6 @@
 import { REST, Routes, SlashCommandBuilder, ApplicationCommandOptionType, ApplicationCommandType } from 'discord.js'
 import fs from 'fs'
-import { TOKEN, CLIENT_ID } from './config'
+import { TOKEN, CLIENT_ID, Runnable } from './config'
 
 const rest = new REST().setToken(TOKEN ?? '')
 
@@ -12,14 +12,14 @@ type Command = {
   options?: ApplicationCommandOptionType[],
 }
 
-export let commands: Record<string, any> = {}
+export let commands: Record<string, Command & Runnable> = {}
 
 function getSlashCommands() {
   const slashCommands: Command[] = []
   const files = fs.readdirSync(`./dist/commands`).filter(file => file.endsWith('.js')) // absolute path
 
   for (const file of files) {
-    const command: Command = require(`./commands/${file}`).default // relative path
+    const command: Command & Runnable = require(`./commands/${file}`).default // relative path
     slashCommands.push(command)
     commands[command.name] = command
   }

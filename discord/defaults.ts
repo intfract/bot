@@ -1,5 +1,4 @@
-import { EmbedBuilder } from 'discord.js'
-import { codeBlock } from './utility'
+import { EmbedBuilder, codeBlock } from 'discord.js'
 
 export function createErrorEmbed(e: any) {
   return new EmbedBuilder()
