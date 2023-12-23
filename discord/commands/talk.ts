@@ -6,10 +6,9 @@ import {
   HarmCategory,
   HarmBlockThreshold,
   Part,
-  GenerateContentResult,
 } from '@google/generative-ai'
 
-const MODEL_NAME = 'gemini-pro'
+const MODEL_NAME = 'gemini-pro-vision'
 
 export default {
   name: 'talk',
@@ -19,9 +18,15 @@ export default {
   options: [
     {
       name: 'text',
-      description: 'The text to input!',
+      description: 'text input',
       type: ApplicationCommandOptionType.String,
       required: true,
+    },
+    {
+      name: 'image',
+      description: 'image attachment',
+      type: ApplicationCommandOptionType.Attachment,
+      required: false,
     },
   ],
   run: async (client: Client, interaction: CommandInteraction) => {
@@ -30,6 +35,7 @@ export default {
     const author = guild?.members.cache.get(user.id)
     const text = interaction.options.get('text')?.value
     if (typeof text !== 'string') return
+    const image = interaction.options.get('image')?.attachment?.url
 
     const genAI = new GoogleGenerativeAI(API_KEY ?? '')
     const model = genAI.getGenerativeModel({ model: MODEL_NAME })
@@ -57,7 +63,7 @@ export default {
       contents: [{ role: "user", parts }],
       generationConfig,
       safetySettings,
-    }).catch(e => interaction.reply({ embeds: [createErrorEmbed(e)] }))
+    }).catch(e => interaction.editReply({ embeds: [createErrorEmbed(e)] }))
 
     if (!('response' in result)) return
     const { response } = result
@@ -66,7 +72,9 @@ export default {
       .setTitle('Gemini Pro')
       .setDescription(response.text())
       .setColor('#5865f2')
+
+    if (image) embed.setImage(image)
     
-    interaction.editReply({ embeds: [embed] })
+    return interaction.editReply({ embeds: [embed] })
   }
 }
