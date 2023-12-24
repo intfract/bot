@@ -7,8 +7,7 @@ import {
   HarmBlockThreshold,
   Part,
 } from '@google/generative-ai'
-
-const MODEL_NAME = 'gemini-pro-vision'
+import axios from 'axios'
 
 export default {
   name: 'talk',
@@ -38,7 +37,7 @@ export default {
     const image = interaction.options.get('image')?.attachment?.url
 
     const genAI = new GoogleGenerativeAI(API_KEY ?? '')
-    const model = genAI.getGenerativeModel({ model: MODEL_NAME })
+    const model = genAI.getGenerativeModel({ model: image ? 'gemini-pro-vision' : 'gemini-pro' })
 
     const generationConfig = {
       temperature: 0,
@@ -56,6 +55,12 @@ export default {
 
     const parts: Part[] = []
     parts.push({ text })
+    if (image) parts.push({
+      inlineData: {
+        mimeType: 'image/png',
+        data: Buffer.from((await axios.get(image, { responseType: 'arraybuffer' })).data).toString('base64'),
+      }
+    })
     
     await interaction.deferReply()
 
