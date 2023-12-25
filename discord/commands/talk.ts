@@ -65,13 +65,14 @@ export default {
       },
     ]
 
+    await interaction.deferReply()
+
     const parts: Part[] = []
     parts.push({ text })
     if (image) {
       const buffer = Buffer.from((await axios.get(image, { responseType: 'arraybuffer' })).data)
-      let ext = image.split('.').at(-1)
-      console.log(ext)
-      if (!ext || !supportedTypes.includes(ext)) return interaction.reply({ embeds: [createErrorEmbed('This file type is not supported!')] })
+      let ext = image.split('.').at(-1)?.substring(0, 3) // get 1st 3 letters of file extension
+      if (!ext || !supportedTypes.includes(ext)) return interaction.editReply({ embeds: [createErrorEmbed('This file type is not supported!')] })
       const mimeType = mimeTypes[supportedTypes.indexOf(ext)]
       parts.push({
         inlineData: {
@@ -80,8 +81,6 @@ export default {
         }
       })
     }
-    
-    await interaction.deferReply()
 
     const result = await model.generateContent({
       contents: [{ role: "user", parts }],
