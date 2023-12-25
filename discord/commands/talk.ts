@@ -9,6 +9,18 @@ import {
 } from '@google/generative-ai'
 import axios from 'axios'
 
+const supportedTypes = [
+  'png',
+  'jpg',
+  'mp4',
+]
+
+const mimeTypes = [
+  'image/png',
+  'image/jpg',
+  'vide/mp4',
+]
+
 export default {
   name: 'talk',
   description: 'Talk to the AI!',
@@ -55,12 +67,19 @@ export default {
 
     const parts: Part[] = []
     parts.push({ text })
-    if (image) parts.push({
-      inlineData: {
-        mimeType: 'image/png',
-        data: Buffer.from((await axios.get(image, { responseType: 'arraybuffer' })).data).toString('base64'),
-      }
-    })
+    if (image) {
+      const buffer = Buffer.from((await axios.get(image, { responseType: 'arraybuffer' })).data)
+      let ext = image.split('.').at(-1)
+      console.log(ext)
+      if (!ext || !supportedTypes.includes(ext)) return interaction.reply({ embeds: [createErrorEmbed('This file type is not supported!')] })
+      const mimeType = mimeTypes[supportedTypes.indexOf(ext)]
+      parts.push({
+        inlineData: {
+          mimeType,
+          data: buffer.toString('base64'),
+        }
+      })
+    }
     
     await interaction.deferReply()
 
