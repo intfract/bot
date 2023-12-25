@@ -80,6 +80,6 @@ export default {
 
     if (image) embed.setImage(image)
     
-    return interaction.editReply({ embeds: [embed] })
+    interaction.editReply({ embeds: [embed] })
   }
 }

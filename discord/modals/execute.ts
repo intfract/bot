@@ -2,7 +2,7 @@ import { ModalSubmitInteraction, Client, EmbedBuilder, codeBlock } from 'discord
 
 export default {
   name: 'execute',
-  run(client: Client, interaction: ModalSubmitInteraction) {
+  run: async (client: Client, interaction: ModalSubmitInteraction) => {
     const code = interaction.fields.getTextInputValue('code')
 
     let console: string[] = []
