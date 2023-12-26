@@ -12,13 +12,11 @@ import axios from 'axios'
 const supportedTypes = [
   'png',
   'jpg',
-  'mp4',
 ]
 
 const mimeTypes = [
   'image/png',
   'image/jpeg',
-  'vide/mp4',
 ]
 
 export default {
@@ -60,8 +58,20 @@ export default {
 
     const safetySettings = [
       {
+        category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+        threshold: HarmBlockThreshold.BLOCK_NONE,
+      },
+      {
         category: HarmCategory.HARM_CATEGORY_HARASSMENT,
-        threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
+        threshold: HarmBlockThreshold.BLOCK_NONE,
+      },
+      {
+        category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+        threshold: HarmBlockThreshold.BLOCK_NONE,
+      },
+      {
+        category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+        threshold: HarmBlockThreshold.BLOCK_NONE,
       },
     ]
 
@@ -74,8 +84,6 @@ export default {
       let ext = image.split('.').at(-1)?.substring(0, 3) // get 1st 3 letters of file extension
       if (!ext || !supportedTypes.includes(ext)) return interaction.editReply({ embeds: [createErrorEmbed('This file type is not supported!')] })
       const mimeType = mimeTypes[supportedTypes.indexOf(ext)]
-
-      console.log(mimeType)
       parts.push({
         inlineData: {
           mimeType,

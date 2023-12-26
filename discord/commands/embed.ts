@@ -20,7 +20,7 @@ export default {
     },
     {
       name: 'color',
-      description: 'hex color code',
+      description: '6 digit hexadecimal number',
       type: ApplicationCommandOptionType.String,
       required: true,
     },
@@ -59,7 +59,7 @@ export default {
     if (typeof color?.value === 'string' && /^([0-9A-F]{6}){1,2}$/i.test(color.value)) {
       hex = `#${color.value}`
     } else {
-      throw new Error('color must be a 6 digit hexadecimal code')
+      return interaction.reply({ content: 'The color parameter must be a 6 digit hexadecimal code without the `#`', ephemeral: true })
     }
 
     const embed = new EmbedBuilder()
