@@ -17,7 +17,7 @@ const supportedTypes = [
 
 const mimeTypes = [
   'image/png',
-  'image/jpg',
+  'image/jpeg',
   'vide/mp4',
 ]
 
@@ -74,6 +74,8 @@ export default {
       let ext = image.split('.').at(-1)?.substring(0, 3) // get 1st 3 letters of file extension
       if (!ext || !supportedTypes.includes(ext)) return interaction.editReply({ embeds: [createErrorEmbed('This file type is not supported!')] })
       const mimeType = mimeTypes[supportedTypes.indexOf(ext)]
+
+      console.log(mimeType)
       parts.push({
         inlineData: {
           mimeType,
