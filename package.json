@@ -4,7 +4,7 @@
   "description": "A modular Discord bot powered by the [MakerSuite](https://makersuite.google.com) API.",
   "main": "index.js",
   "scripts": {
-    "discord": "cd discord && npm i && npm run bot",
+    "discord": "cd discord && npm i && tsc && npm run bot",
     "dashboard-dev": "cd dashboard && npm i && npm run dev",
     "dashboard": "cd dashboard && npm i && npm run build && node build/index.js",
     "dev": "concurrently \"npm run discord\" \"npm run dashboard-dev\"",
