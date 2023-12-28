@@ -3,7 +3,7 @@ import { getLastMessages, getLastMessagesBy } from '../database'
 
 export default {
   name: 'delete',
-  description: 'delete messages in a channel!',
+  description: 'Delete messages in a channel!',
   type: ApplicationCommandType.ChatInput,
   category: 'utility',
   options: [
