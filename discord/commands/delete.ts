@@ -1,5 +1,5 @@
 import { ApplicationCommandOptionType, ApplicationCommandType, Client, ColorResolvable, CommandInteraction, EmbedBuilder, InteractionResponse, Message, PermissionsBitField } from 'discord.js'
-import { getLastMessages, getLastMessagesBy } from '../database'
+import { getLastMessages, getLastMessagesWith } from '../database'
 
 export default {
   name: 'delete',
@@ -32,7 +32,7 @@ export default {
     await interaction.deferReply({ ephemeral: true })
     let messages: Message[]
     if (messageAuthor) {
-      messages = await getLastMessagesBy(client, channelId, count, message => message.author.equals(messageAuthor))
+      messages = await getLastMessagesWith(client, channelId, count, message => message.author.equals(messageAuthor))
     } else {
       messages = await getLastMessages(client, channelId, count)
     }

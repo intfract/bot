@@ -27,7 +27,7 @@ export async function getMessages(client: Client, channelId: string): Promise<Me
   return messages
 }
 
-export async function getMessagesBy(client: Client, channelId: string, callback: (message: Message) => boolean): Promise<Message<boolean>[]> {
+export async function getMessagesWith(client: Client, channelId: string, callback: (message: Message) => boolean): Promise<Message<boolean>[]> {
   const channel = client.channels.cache.get(channelId)
   const messages: Message[] = []
   if (!channel?.isTextBased()) return messages
@@ -43,6 +43,24 @@ export async function getMessagesBy(client: Client, channelId: string, callback:
   } while (pointer)
   
   return messages
+}
+
+export async function findMessageWith(client: Client, channelId: string, callback: (message: Message) => boolean): Promise<Message<boolean> | undefined> {
+  const channel = client.channels.cache.get(channelId)
+  let target: Message | undefined
+  if (!channel?.isTextBased()) return
+
+  let pointer: Message | undefined | null
+  let options: FetchMessagesOptions = { limit: FETCH_LIMIT }
+  do {
+    if (pointer) options.before = pointer.id
+    pointer = await channel.messages.fetch(options).then(messagePage => {
+      messagePage.forEach(message => callback(message) ? target = message : null)
+      return messagePage.size === FETCH_LIMIT && !target ? messagePage.at(-1) : null
+    })
+  } while (pointer)
+  
+  return target
 }
 
 /**
@@ -72,7 +90,7 @@ export async function getLastMessages(client: Client, channelId: string, count: 
   return messages
 }
 
-export async function getLastMessagesBy(client: Client, channelId: string, count: number, callback: (message: Message) => boolean): Promise<Message<boolean>[]> {
+export async function getLastMessagesWith(client: Client, channelId: string, count: number, callback: (message: Message) => boolean): Promise<Message<boolean>[]> {
   const channel = client.channels.cache.get(channelId)
   const messages: Message[] = []
   if (!channel?.isTextBased()) return messages
