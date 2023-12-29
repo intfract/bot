@@ -6,6 +6,7 @@ export default {
   description: 'Delete messages in a channel!',
   type: ApplicationCommandType.ChatInput,
   category: 'utility',
+  default_member_permissions: PermissionsBitField.Flags.ManageMessages.toString(),
   options: [
     {
       name: 'count',
@@ -24,7 +25,6 @@ export default {
     const { user, channelId } = interaction
     const guild = client.guilds.cache.get(interaction.guild?.id ?? '')
     const author = guild?.members.cache.get(user.id)
-    if (!author?.permissions.has(PermissionsBitField.Flags.ManageMessages)) return interaction.reply({ content: 'You do not have permission to manage messages!', ephemeral: true })
     const count = interaction.options.get('count')?.value as number
     if (count <= 0) return interaction.reply({ content: 'You must input an integer greater than 0.', ephemeral: true })
     const messageAuthor = interaction.options.get('author')?.user

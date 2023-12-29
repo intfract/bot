@@ -9,6 +9,7 @@ type Command = {
   description: string,
   type: ApplicationCommandType,
   category: string,
+  default_member_permissions?: string,
   options?: ApplicationCommandOptionType[],
 }
 
