@@ -52,7 +52,6 @@ export default {
   run: async (client: Client, interaction: CommandInteraction) => {
     const { user } = interaction
     const guild = client.guilds.cache.get(interaction.guild?.id ?? '')
-    const author = guild?.members.cache.get(user.id)
     const color = interaction.options.get('color')
     let hex: ColorResolvable
 

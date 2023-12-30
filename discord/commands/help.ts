@@ -3,7 +3,6 @@ import { commands } from '../commands'
 
 const keys = Object.keys(ApplicationCommandOptionType)
 const types = keys.slice(keys.length / 2)
-console.log(types)
 
 export default {
   name: 'help',

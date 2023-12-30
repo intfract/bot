@@ -8,7 +8,6 @@ type Command = {
   name: string,
   description: string,
   type: ApplicationCommandType,
-  category: string,
   default_member_permissions?: string,
   options?: ApplicationCommandOptionType[],
 }
@@ -20,10 +19,25 @@ function getSlashCommands() {
   const files = fs.readdirSync(`./dist/commands`).filter(file => file.endsWith('.js')) // absolute path
 
   for (const file of files) {
-    const command: Command & Runnable = require(`./commands/${file}`).default // relative path
-    slashCommands.push(command)
+    let createCopy = false
+    const data = require(`./commands/${file}`).default
+    const command: Command & Runnable = data // relative path
     commands[command.name] = command
+    const slashCommand = { ...data }
+    if (slashCommand.category === 'user') createCopy = true
+    delete slashCommand.run
+    delete slashCommand.category
+    slashCommands.push(slashCommand)
+    if (createCopy) {
+      const copy = { ...slashCommand }
+      delete copy.description
+      delete copy.default_member_permissions
+      delete copy.options
+      copy.type = ApplicationCommandType.User
+      slashCommands.push(copy)
+    }
   }
+
   return slashCommands
 }
 

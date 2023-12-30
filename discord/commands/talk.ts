@@ -39,9 +39,6 @@ export default {
     },
   ],
   run: async (client: Client, interaction: CommandInteraction) => {
-    const { user } = interaction
-    const guild = client.guilds.cache.get(interaction.guild?.id ?? '')
-    const author = guild?.members.cache.get(user.id)
     const text = interaction.options.get('text')?.value
     if (typeof text !== 'string') return
     const image = interaction.options.get('image')?.attachment?.url
