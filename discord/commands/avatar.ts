@@ -8,10 +8,10 @@ export default {
   options: [
     {
       name: 'user',
-      description: 'The avatar of the user you want to display!',
+      description: 'the avatar of the user you want to display',
       type: ApplicationCommandOptionType.User,
       required: false,
-    }
+    },
   ],
   run: async (client: Client, interaction: CommandInteraction | UserContextMenuCommandInteraction) => {
     const user = interaction.options.get('user')?.user || interaction.user

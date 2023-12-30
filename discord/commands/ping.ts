@@ -1,11 +1,11 @@
-import { ApplicationCommandType, Client, CommandInteraction, EmbedBuilder } from 'discord.js'
+import { ApplicationCommandType, ChatInputCommandInteraction, Client, CommandInteraction, EmbedBuilder } from 'discord.js'
 
 export default {
   name: 'ping',
   description: 'Check the bot\'s ping',
   type: ApplicationCommandType.ChatInput,
   category: 'general',
-  run: async (client: Client, interaction: CommandInteraction) => {
+  run: async (client: Client, interaction: ChatInputCommandInteraction) => {
     const embed = new EmbedBuilder()
       .setTitle('Ping')
       .setDescription('🏓 Pong!')

@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionBase, ApplicationCommandOptionType, ApplicationCommandType, Client, CommandInteraction, EmbedBuilder } from 'discord.js'
+import { ApplicationCommandOptionBase, ApplicationCommandOptionType, ApplicationCommandType, ChatInputCommandInteraction, Client, CommandInteraction, EmbedBuilder } from 'discord.js'
 import { commands } from '../commands'
 
 const keys = Object.keys(ApplicationCommandOptionType)
@@ -9,7 +9,7 @@ export default {
   description: 'Help is on its way!',
   type: ApplicationCommandType.ChatInput,
   category: 'general',
-  run: async (client: Client, interaction: CommandInteraction) => {
+  run: async (client: Client, interaction: ChatInputCommandInteraction) => {
     const embed = new EmbedBuilder()
       .setTitle('Help')
       .setDescription('Here is a list of commands!')

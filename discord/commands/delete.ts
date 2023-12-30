@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType, ApplicationCommandType, Client, ColorResolvable, CommandInteraction, EmbedBuilder, InteractionResponse, Message, PermissionsBitField } from 'discord.js'
+import { ApplicationCommandOptionType, ApplicationCommandType, Client, ColorResolvable, ChatInputCommandInteraction, EmbedBuilder, InteractionResponse, Message, PermissionsBitField } from 'discord.js'
 import { getLastMessages, getLastMessagesWith } from '../database'
 
 export default {
@@ -21,7 +21,7 @@ export default {
       required: false,
     },
   ],
-  run: async (client: Client, interaction: CommandInteraction) => {
+  run: async (client: Client, interaction: ChatInputCommandInteraction) => {
     const { user, channelId } = interaction
     const guild = client.guilds.cache.get(interaction.guild?.id ?? '')
     const author = guild?.members.cache.get(user.id)

@@ -1,11 +1,11 @@
-import { ApplicationCommandOptionType, ApplicationCommandType, Client, ColorResolvable, CommandInteraction, EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } from 'discord.js'
+import { ApplicationCommandOptionType, ApplicationCommandType, Client, ColorResolvable, ChatInputCommandInteraction, EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder } from 'discord.js'
 
 export default {
   name: 'execute',
   description: 'Execute JavaScript!',
   type: ApplicationCommandType.ChatInput,
   category: 'utility',
-  run: async (client: Client, interaction: CommandInteraction) => {
+  run: async (client: Client, interaction: ChatInputCommandInteraction) => {
     const modal = new ModalBuilder()
       .setCustomId('execute')
       .setTitle('JavaScript Executor')

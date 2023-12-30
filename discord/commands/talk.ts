@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType, ApplicationCommandType, Client, ColorResolvable, CommandInteraction, EmbedBuilder, InteractionResponse } from 'discord.js'
+import { ApplicationCommandOptionType, ApplicationCommandType, ChatInputCommandInteraction, Client, ColorResolvable, CommandInteraction, EmbedBuilder, InteractionResponse } from 'discord.js'
 import { API_KEY } from '../config'
 import { createErrorEmbed } from '../defaults'
 import {
@@ -38,7 +38,7 @@ export default {
       required: false,
     },
   ],
-  run: async (client: Client, interaction: CommandInteraction) => {
+  run: async (client: Client, interaction: ChatInputCommandInteraction) => {
     const text = interaction.options.get('text')?.value
     if (typeof text !== 'string') return
     const image = interaction.options.get('image')?.attachment?.url

@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType, ApplicationCommandType, Client, ColorResolvable, CommandInteraction, EmbedBuilder } from 'discord.js'
+import { ApplicationCommandOptionType, ApplicationCommandType, Client, ColorResolvable, ChatInputCommandInteraction, EmbedBuilder } from 'discord.js'
 
 export default {
   name: 'embed',
@@ -49,7 +49,7 @@ export default {
       required: false,
     },
   ],
-  run: async (client: Client, interaction: CommandInteraction) => {
+  run: async (client: Client, interaction: ChatInputCommandInteraction) => {
     const { user } = interaction
     const guild = client.guilds.cache.get(interaction.guild?.id ?? '')
     const color = interaction.options.get('color')
