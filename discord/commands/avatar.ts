@@ -2,7 +2,7 @@ import { ApplicationCommandType, Client, CommandInteraction, EmbedBuilder, Appli
 
 export default {
   name: 'avatar',
-  description: 'Check the bot\'s ping',
+  description: 'Get the avatar of a user!',
   type: ApplicationCommandType.ChatInput,
   category: 'user',
   options: [

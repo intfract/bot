@@ -21,7 +21,7 @@ export default {
     },
   ],
   run: async (client: Client, interaction: ChatInputCommandInteraction) => {
-    console.log(interaction.options.getSubcommand())
+    const subcommand = interaction.options.getSubcommand()
 
     const embed = new EmbedBuilder()
       .setTitle('Logs')

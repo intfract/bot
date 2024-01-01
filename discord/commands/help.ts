@@ -1,8 +1,20 @@
-import { ApplicationCommandOptionBase, ApplicationCommandOptionType, ApplicationCommandType, ChatInputCommandInteraction, Client, CommandInteraction, EmbedBuilder } from 'discord.js'
-import { commands } from '../commands'
+import { APIEmbedField, ApplicationCommand, ApplicationCommandOption, ApplicationCommandOptionType, ApplicationCommandType, ChatInputCommandInteraction, Client, CommandInteraction, EmbedBuilder, RestOrArray } from 'discord.js'
 
 const keys = Object.keys(ApplicationCommandOptionType)
 const types = keys.slice(keys.length / 2)
+
+function resolveSubcommands(command: ApplicationCommand) {
+  const subcommands: APIEmbedField[] = []
+  command.options.forEach((option: ApplicationCommandOption) => {
+    if (option.type === ApplicationCommandOptionType.Subcommand) {
+      subcommands.push({
+        name: `</${command.name} ${option.name}:${command.id}>`,
+        value: option.description,
+      })
+    }
+  })
+  return subcommands
+}
 
 export default {
   name: 'help',
@@ -15,12 +27,20 @@ export default {
       .setDescription('Here is a list of commands!')
       .setColor('#5865f2')
 
-    for (const [key, value] of Object.entries(commands)) {
-      embed.addFields({
-        name: value.options ? [value.name, ...value.options.map((x: any) => (x instanceof ApplicationCommandOptionBase ? `\`${types[x.type - 1]} ${x.name}\`` : ''))].join(' ') : key,
-        value: value.description,
-      })
-    }
+    const commands = await client.application?.commands.fetch()
+    commands?.forEach((command: ApplicationCommand) => {
+      if (command.type === ApplicationCommandType.ChatInput) {
+        const subcommands = resolveSubcommands(command)
+        if (subcommands.length) {
+          embed.addFields(...subcommands)
+        } else {
+          embed.addFields({
+            name: `</${command.name}:${command.id}>`,
+            value: command.description,
+          })
+        }
+      }
+    })
 
     interaction.reply({ embeds: [embed] })
   }
