@@ -71,6 +71,7 @@
 
   .links a {
     padding: 0 16px;
+    color: var(--mdc-theme-primary);
   }
 
   .hero {

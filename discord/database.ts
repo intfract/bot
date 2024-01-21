@@ -1,6 +1,9 @@
-import { Client, FetchMessagesOptions, Message, TextChannel } from 'discord.js'
+import { ChannelType, Client, FetchMessagesOptions, Message, TextChannel } from 'discord.js'
 
 const FETCH_LIMIT = 100
+const CHANNEL_LIMIT = 500
+const SKIP_VALUE = 2
+const DIGITS = 3
 
 /**
  * gets all the messages in a channel
@@ -112,4 +115,21 @@ export async function getLastMessagesWith(client: Client, channelId: string, cou
   } while (pointer && count > 0)
   
   return messages
+}
+
+/**
+ * partitions an empty server into chunks for storage of user data
+ * @param client the bot client
+ * @param guildId ID of guild to partition for storage
+ */
+
+export function partition(client: Client, guildId: string) {
+  const guild = client.guilds.cache.get(guildId)
+  for (let i = 0; i < CHANNEL_LIMIT * SKIP_VALUE; i += SKIP_VALUE) {
+    const str = i.toString()
+    guild?.channels.create({
+      name: '0'.repeat(DIGITS - str.length) + str,
+      type: ChannelType.GuildText,
+    })
+  }
 }
