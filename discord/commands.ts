@@ -20,8 +20,8 @@ function getSlashCommands() {
 
   for (const file of files) {
     let createCopy = false
-    const data = require(`./commands/${file}`).default
-    const command: Command & Runnable = data // relative path
+    const data = require(`./commands/${file}`).default // relative path
+    const command: Command & Runnable = data
     commands[command.name] = command
     const slashCommand = { ...data }
     if (slashCommand.category === 'user') createCopy = true

@@ -1,4 +1,5 @@
 import { ApplicationCommandOptionType, ApplicationCommandType, ChatInputCommandInteraction, Client, CommandInteraction, EmbedBuilder } from 'discord.js'
+import fs from 'fs'
 
 export default {
   name: 'logs',
@@ -6,22 +7,12 @@ export default {
   type: ApplicationCommandType.ChatInput,
   category: 'general',
   options: [
-    {
-      name: 'set',
-      description: 'Set the log channel for the server!',
-      type: ApplicationCommandOptionType.Subcommand,
-      options: [
-        {
-          name: 'channel',
-          description: 'the log channel',
-          type: ApplicationCommandOptionType.Channel,
-          required: true,
-        },
-      ],
-    },
+    fs.readdirSync(`./dist/commands/logs`).filter(file => file.endsWith('.js')).map(file => require(`./logs/${file}`).default)
   ],
   run: async (client: Client, interaction: ChatInputCommandInteraction) => {
     const subcommand = interaction.options.getSubcommand()
+    const f: (client: Client, interaction: ChatInputCommandInteraction) => Promise<void> = require(`./logs/${subcommand}`).default.run
+    await f(client, interaction)
 
     const embed = new EmbedBuilder()
       .setTitle('Logs')
