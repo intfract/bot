@@ -1,4 +1,5 @@
 import { ApplicationCommandOptionType, ApplicationCommandType, ChatInputCommandInteraction, Client, CommandInteraction, EmbedBuilder, TextChannel, ThreadChannel } from 'discord.js'
+import { DATA_CHANNEL_ID } from '../../config'
 
 export default {
   name: 'set',
@@ -15,7 +16,7 @@ export default {
   run: async (client: Client, interaction: ChatInputCommandInteraction) => {
     const guild = interaction.guild
     const channel = interaction.options.get('channel')?.channel
-    const dataChannel = client.channels.cache.get('1188437485227888650') as TextChannel
+    const dataChannel = client.channels.cache.get(DATA_CHANNEL_ID) as TextChannel
     const { threads } = dataChannel
     let thread = threads.cache.find(thread => thread.name === guild?.id)
     if (!thread) thread = await dataChannel.threads.create({ name: guild?.id ?? '' })

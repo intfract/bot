@@ -43,7 +43,7 @@ export default {
     if (typeof text !== 'string') return
     const image = interaction.options.get('image')?.attachment?.url
 
-    const genAI = new GoogleGenerativeAI(API_KEY ?? '')
+    const genAI = new GoogleGenerativeAI(API_KEY)
     const model = genAI.getGenerativeModel({ model: image ? 'gemini-pro-vision' : 'gemini-pro' })
 
     const generationConfig = {
