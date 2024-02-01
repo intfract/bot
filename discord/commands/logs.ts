@@ -7,7 +7,11 @@ export default {
   type: ApplicationCommandType.ChatInput,
   category: 'general',
   options: [
-    fs.readdirSync(`./dist/commands/logs`).filter(file => file.endsWith('.js')).map(file => require(`./logs/${file}`).default)
+    fs.readdirSync(`./dist/commands/logs`).filter(file => file.endsWith('.js')).map(file => {
+      const subcommand = require(`./logs/${file}`).default
+      delete subcommand.run
+      return subcommand
+    })[0]
   ],
   run: async (client: Client, interaction: ChatInputCommandInteraction) => {
     const subcommand = interaction.options.getSubcommand()
